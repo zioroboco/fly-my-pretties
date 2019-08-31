@@ -5,11 +5,16 @@
     "node": "10.15"
   },
   "scripts": {
+    "test": "jest",
     "compile": "tsc",
     "lint": "tslint -p ."
   },
   "dependencies": {
+    "@types/jest": "^24.0.18",
     "@types/node": "^12.7.3",
+    "jest": "^24.9.0",
+    "jest-circus": "^24.9.0",
+    "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
     "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",
