@@ -1,6 +1,9 @@
 {
   "name": "fly-my-pretties",
   "private": true,
+  "engines": {
+    "node": "10.15"
+  },
   "scripts": {},
   "dependencies": {}
 }
