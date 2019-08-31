@@ -58,6 +58,14 @@ jobs:
           name: Test
           command: yarn test
 
+  deploy:
+    <<: *defaults
+    steps:
+      - attach
+      - run:
+          name: Deploy
+          command: yarn cdk deploy
+
 workflows:
   build:
     jobs:
@@ -71,3 +79,9 @@ workflows:
       - test:
           requires:
             - install
+      - deploy:
+          requires:
+            - install
+            - compile
+            - lint
+            - test
