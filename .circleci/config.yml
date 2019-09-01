@@ -64,7 +64,7 @@ jobs:
       - attach
       - run:
           name: Deploy
-          command: yarn cdk deploy
+          command: yarn cdk deploy --require-approval=never
 
 workflows:
   build:
