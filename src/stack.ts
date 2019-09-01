@@ -17,7 +17,7 @@ export class Function extends lambda.Function {
   constructor(scope: cdk.Construct, id: string, { code }: FunctionProps) {
     super(scope, id, {
       handler: "index.handler",
-      runtime: lambda.Runtime.NODEJS_10_X,
+      runtime: lambda.Runtime.NODEJS_8_10,
       code: lambda.Code.fromInline(code),
     })
   }

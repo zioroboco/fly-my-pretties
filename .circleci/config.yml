@@ -3,7 +3,7 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/workspace
   docker:
-    - image: circleci/node:10.15
+    - image: circleci/node:8.10
 
 commands:
   attach:
