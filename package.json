@@ -7,7 +7,7 @@
   "scripts": {
     "ts-node": "ts-node --transpile-only",
     "test": "jest",
-    "compile": "tsc",
+    "type": "tsc",
     "lint": "tslint -p ."
   },
   "dependencies": {
