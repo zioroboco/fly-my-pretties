@@ -4,7 +4,7 @@ import * as cdk from "@aws-cdk/core"
 
 export const STACK_NAME = "fly-my-pretties"
 
-const logEventFunction = `
+const basicFunction = `
 exports.handler = function(event, context, callback) {
   console.log('Event: ', event)
   callback(null, event)
@@ -27,9 +27,9 @@ export class Stack extends cdk.Stack {
   constructor(app: cdk.App, id: string, props: cdk.StackProps) {
     super(app, id, props)
 
-    new apiGateway.LambdaRestApi(this, "Endpoint", {
-      handler: new Function(this, "LogEvent", {
-        code: logEventFunction,
+    new apiGateway.LambdaRestApi(this, "PrettyEndpoint", {
+      handler: new Function(this, "PrettyFunction", {
+        code: basicFunction,
       }),
     })
   }
