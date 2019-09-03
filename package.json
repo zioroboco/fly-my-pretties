@@ -33,6 +33,7 @@
     "@aws-cdk/region-info": "^1.6.1",
     "@babel/core": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
+    "@types/aws-lambda": "^8.10.31",
     "@types/memory-fs": "^0.3.2",
     "@types/node": "^12.7.3",
     "@types/webpack": "^4.39.1",
