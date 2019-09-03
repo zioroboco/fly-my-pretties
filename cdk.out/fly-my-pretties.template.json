@@ -1,0 +1,1221 @@
+{
+  "Resources": {
+    "MizaruFunctionServiceRole28C351E6": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruFunction/ServiceRole/Resource"
+      }
+    },
+    "MizaruFunctionBD932342": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "ZipFile": "!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){\"undefined\"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:\"Module\"}),Object.defineProperty(e,\"__esModule\",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&\"object\"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,\"default\",{enumerable:!0,value:e}),2&t&&\"string\"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,\"a\",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p=\"\",n(n.s=0)}([function(e,t,n){\"use strict\";n.r(t);n.d(t,\"handler\",function(){return r});const r=async e=>({statusCode:200,body:\"🙉\"})}]);"
+        },
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "MizaruFunctionServiceRole28C351E6",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10"
+      },
+      "DependsOn": [
+        "MizaruFunctionServiceRole28C351E6"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruFunction/Resource"
+      }
+    },
+    "MizaruFunctionApiPermissionflymyprettiesMizaruEndpoint1A5E66B0ANY51E4B137": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "MizaruFunctionBD932342",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "MizaruEndpoint5A0C7B64"
+              },
+              "/",
+              {
+                "Ref": "MizaruEndpointDeploymentStageprod223A93E0"
+              },
+              "/*/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruFunction/ApiPermission.flymyprettiesMizaruEndpoint1A5E66B0.ANY.."
+      }
+    },
+    "MizaruFunctionApiPermissionTestflymyprettiesMizaruEndpoint1A5E66B0ANYCEBF56B1": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "MizaruFunctionBD932342",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "MizaruEndpoint5A0C7B64"
+              },
+              "/test-invoke-stage/*/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruFunction/ApiPermission.Test.flymyprettiesMizaruEndpoint1A5E66B0.ANY.."
+      }
+    },
+    "MizaruFunctionApiPermissionflymyprettiesMizaruEndpoint1A5E66B0ANYproxy1255E7B3": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "MizaruFunctionBD932342",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "MizaruEndpoint5A0C7B64"
+              },
+              "/",
+              {
+                "Ref": "MizaruEndpointDeploymentStageprod223A93E0"
+              },
+              "/*/{proxy+}"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruFunction/ApiPermission.flymyprettiesMizaruEndpoint1A5E66B0.ANY..{proxy+}"
+      }
+    },
+    "MizaruFunctionApiPermissionTestflymyprettiesMizaruEndpoint1A5E66B0ANYproxy696E19CC": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "MizaruFunctionBD932342",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "MizaruEndpoint5A0C7B64"
+              },
+              "/test-invoke-stage/*/{proxy+}"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruFunction/ApiPermission.Test.flymyprettiesMizaruEndpoint1A5E66B0.ANY..{proxy+}"
+      }
+    },
+    "MizaruEndpoint5A0C7B64": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Name": "MizaruEndpoint"
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruEndpoint/Resource"
+      }
+    },
+    "MizaruEndpointDeploymentB416C9E0fa4e58d5548505323ef8c23606657c11": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "MizaruEndpoint5A0C7B64"
+        },
+        "Description": "Automatically created by the RestApi construct"
+      },
+      "DependsOn": [
+        "MizaruEndpointproxyANYB20299BC",
+        "MizaruEndpointproxyEBD8A32A",
+        "MizaruEndpointANYBCAE82A6"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruEndpoint/Deployment/Resource"
+      }
+    },
+    "MizaruEndpointDeploymentStageprod223A93E0": {
+      "Type": "AWS::ApiGateway::Stage",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "MizaruEndpoint5A0C7B64"
+        },
+        "DeploymentId": {
+          "Ref": "MizaruEndpointDeploymentB416C9E0fa4e58d5548505323ef8c23606657c11"
+        },
+        "StageName": "prod"
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruEndpoint/DeploymentStage.prod/Resource"
+      }
+    },
+    "MizaruEndpointCloudWatchRole3F3455C5": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruEndpoint/CloudWatchRole/Resource"
+      }
+    },
+    "MizaruEndpointAccountFAD52D0C": {
+      "Type": "AWS::ApiGateway::Account",
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "MizaruEndpointCloudWatchRole3F3455C5",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "MizaruEndpoint5A0C7B64"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruEndpoint/Account"
+      }
+    },
+    "MizaruEndpointproxyEBD8A32A": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "MizaruEndpoint5A0C7B64",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "MizaruEndpoint5A0C7B64"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruEndpoint/Default/{proxy+}/Resource"
+      }
+    },
+    "MizaruEndpointproxyANYB20299BC": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "ANY",
+        "ResourceId": {
+          "Ref": "MizaruEndpointproxyEBD8A32A"
+        },
+        "RestApiId": {
+          "Ref": "MizaruEndpoint5A0C7B64"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "MizaruFunctionBD932342",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruEndpoint/Default/{proxy+}/ANY/Resource"
+      }
+    },
+    "MizaruEndpointANYBCAE82A6": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "ANY",
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "MizaruEndpoint5A0C7B64",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "MizaruEndpoint5A0C7B64"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "MizaruFunctionBD932342",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/MizaruEndpoint/Default/ANY/Resource"
+      }
+    },
+    "KikazaruFunctionServiceRole372EF6DF": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruFunction/ServiceRole/Resource"
+      }
+    },
+    "KikazaruFunction7A906F34": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "ZipFile": "!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){\"undefined\"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:\"Module\"}),Object.defineProperty(e,\"__esModule\",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&\"object\"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,\"default\",{enumerable:!0,value:e}),2&t&&\"string\"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,\"a\",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p=\"\",n(n.s=0)}([function(e,t,n){\"use strict\";n.r(t);n.d(t,\"handler\",function(){return r});const r=async e=>({statusCode:200,body:\"🙈\"})}]);"
+        },
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "KikazaruFunctionServiceRole372EF6DF",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10"
+      },
+      "DependsOn": [
+        "KikazaruFunctionServiceRole372EF6DF"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruFunction/Resource"
+      }
+    },
+    "KikazaruFunctionApiPermissionflymyprettiesKikazaruEndpoint33F3E842ANYE59F5637": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "KikazaruFunction7A906F34",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "KikazaruEndpoint6EFB12FB"
+              },
+              "/",
+              {
+                "Ref": "KikazaruEndpointDeploymentStageprod5B9285CC"
+              },
+              "/*/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruFunction/ApiPermission.flymyprettiesKikazaruEndpoint33F3E842.ANY.."
+      }
+    },
+    "KikazaruFunctionApiPermissionTestflymyprettiesKikazaruEndpoint33F3E842ANYCCDBA5CE": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "KikazaruFunction7A906F34",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "KikazaruEndpoint6EFB12FB"
+              },
+              "/test-invoke-stage/*/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruFunction/ApiPermission.Test.flymyprettiesKikazaruEndpoint33F3E842.ANY.."
+      }
+    },
+    "KikazaruFunctionApiPermissionflymyprettiesKikazaruEndpoint33F3E842ANYproxy606B6AE5": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "KikazaruFunction7A906F34",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "KikazaruEndpoint6EFB12FB"
+              },
+              "/",
+              {
+                "Ref": "KikazaruEndpointDeploymentStageprod5B9285CC"
+              },
+              "/*/{proxy+}"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruFunction/ApiPermission.flymyprettiesKikazaruEndpoint33F3E842.ANY..{proxy+}"
+      }
+    },
+    "KikazaruFunctionApiPermissionTestflymyprettiesKikazaruEndpoint33F3E842ANYproxy38A94336": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "KikazaruFunction7A906F34",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "KikazaruEndpoint6EFB12FB"
+              },
+              "/test-invoke-stage/*/{proxy+}"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruFunction/ApiPermission.Test.flymyprettiesKikazaruEndpoint33F3E842.ANY..{proxy+}"
+      }
+    },
+    "KikazaruEndpoint6EFB12FB": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Name": "KikazaruEndpoint"
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruEndpoint/Resource"
+      }
+    },
+    "KikazaruEndpointDeployment7D18118905761bdd65e786cc4f69ca898495cdf5": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "KikazaruEndpoint6EFB12FB"
+        },
+        "Description": "Automatically created by the RestApi construct"
+      },
+      "DependsOn": [
+        "KikazaruEndpointproxyANY48118769",
+        "KikazaruEndpointproxyB9748DAA",
+        "KikazaruEndpointANYAFC409F2"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruEndpoint/Deployment/Resource"
+      }
+    },
+    "KikazaruEndpointDeploymentStageprod5B9285CC": {
+      "Type": "AWS::ApiGateway::Stage",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "KikazaruEndpoint6EFB12FB"
+        },
+        "DeploymentId": {
+          "Ref": "KikazaruEndpointDeployment7D18118905761bdd65e786cc4f69ca898495cdf5"
+        },
+        "StageName": "prod"
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruEndpoint/DeploymentStage.prod/Resource"
+      }
+    },
+    "KikazaruEndpointCloudWatchRole980E184A": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruEndpoint/CloudWatchRole/Resource"
+      }
+    },
+    "KikazaruEndpointAccountDAD64106": {
+      "Type": "AWS::ApiGateway::Account",
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "KikazaruEndpointCloudWatchRole980E184A",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "KikazaruEndpoint6EFB12FB"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruEndpoint/Account"
+      }
+    },
+    "KikazaruEndpointproxyB9748DAA": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "KikazaruEndpoint6EFB12FB",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "KikazaruEndpoint6EFB12FB"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruEndpoint/Default/{proxy+}/Resource"
+      }
+    },
+    "KikazaruEndpointproxyANY48118769": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "ANY",
+        "ResourceId": {
+          "Ref": "KikazaruEndpointproxyB9748DAA"
+        },
+        "RestApiId": {
+          "Ref": "KikazaruEndpoint6EFB12FB"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "KikazaruFunction7A906F34",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruEndpoint/Default/{proxy+}/ANY/Resource"
+      }
+    },
+    "KikazaruEndpointANYAFC409F2": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "ANY",
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "KikazaruEndpoint6EFB12FB",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "KikazaruEndpoint6EFB12FB"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "KikazaruFunction7A906F34",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/KikazaruEndpoint/Default/ANY/Resource"
+      }
+    },
+    "IwazaruFunctionServiceRoleE9D5B55F": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruFunction/ServiceRole/Resource"
+      }
+    },
+    "IwazaruFunction13083BBE": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "ZipFile": "!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){\"undefined\"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:\"Module\"}),Object.defineProperty(e,\"__esModule\",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&\"object\"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,\"default\",{enumerable:!0,value:e}),2&t&&\"string\"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,\"a\",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p=\"\",n(n.s=0)}([function(e,t,n){\"use strict\";n.r(t);n.d(t,\"handler\",function(){return r});const r=async e=>({statusCode:200,body:\"🙊\"})}]);"
+        },
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "IwazaruFunctionServiceRoleE9D5B55F",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10"
+      },
+      "DependsOn": [
+        "IwazaruFunctionServiceRoleE9D5B55F"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruFunction/Resource"
+      }
+    },
+    "IwazaruFunctionApiPermissionflymyprettiesIwazaruEndpoint0C1F8832ANYF9B59BEE": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "IwazaruFunction13083BBE",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "IwazaruEndpoint0F75FF98"
+              },
+              "/",
+              {
+                "Ref": "IwazaruEndpointDeploymentStageprod2B812659"
+              },
+              "/*/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruFunction/ApiPermission.flymyprettiesIwazaruEndpoint0C1F8832.ANY.."
+      }
+    },
+    "IwazaruFunctionApiPermissionTestflymyprettiesIwazaruEndpoint0C1F8832ANY53753EF2": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "IwazaruFunction13083BBE",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "IwazaruEndpoint0F75FF98"
+              },
+              "/test-invoke-stage/*/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruFunction/ApiPermission.Test.flymyprettiesIwazaruEndpoint0C1F8832.ANY.."
+      }
+    },
+    "IwazaruFunctionApiPermissionflymyprettiesIwazaruEndpoint0C1F8832ANYproxyFE72DE98": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "IwazaruFunction13083BBE",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "IwazaruEndpoint0F75FF98"
+              },
+              "/",
+              {
+                "Ref": "IwazaruEndpointDeploymentStageprod2B812659"
+              },
+              "/*/{proxy+}"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruFunction/ApiPermission.flymyprettiesIwazaruEndpoint0C1F8832.ANY..{proxy+}"
+      }
+    },
+    "IwazaruFunctionApiPermissionTestflymyprettiesIwazaruEndpoint0C1F8832ANYproxy9733D8B2": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "IwazaruFunction13083BBE",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:ap-southeast-2:203242799745:",
+              {
+                "Ref": "IwazaruEndpoint0F75FF98"
+              },
+              "/test-invoke-stage/*/{proxy+}"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruFunction/ApiPermission.Test.flymyprettiesIwazaruEndpoint0C1F8832.ANY..{proxy+}"
+      }
+    },
+    "IwazaruEndpoint0F75FF98": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Name": "IwazaruEndpoint"
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruEndpoint/Resource"
+      }
+    },
+    "IwazaruEndpointDeploymentF5BC7A8B90b2a0c4a5825de7039505d6a62d8fe5": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "IwazaruEndpoint0F75FF98"
+        },
+        "Description": "Automatically created by the RestApi construct"
+      },
+      "DependsOn": [
+        "IwazaruEndpointproxyANYEC4E3139",
+        "IwazaruEndpointproxy480C4637",
+        "IwazaruEndpointANYEBF52260"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruEndpoint/Deployment/Resource"
+      }
+    },
+    "IwazaruEndpointDeploymentStageprod2B812659": {
+      "Type": "AWS::ApiGateway::Stage",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "IwazaruEndpoint0F75FF98"
+        },
+        "DeploymentId": {
+          "Ref": "IwazaruEndpointDeploymentF5BC7A8B90b2a0c4a5825de7039505d6a62d8fe5"
+        },
+        "StageName": "prod"
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruEndpoint/DeploymentStage.prod/Resource"
+      }
+    },
+    "IwazaruEndpointCloudWatchRole8003A31F": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruEndpoint/CloudWatchRole/Resource"
+      }
+    },
+    "IwazaruEndpointAccountF39AC6D4": {
+      "Type": "AWS::ApiGateway::Account",
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "IwazaruEndpointCloudWatchRole8003A31F",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "IwazaruEndpoint0F75FF98"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruEndpoint/Account"
+      }
+    },
+    "IwazaruEndpointproxy480C4637": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "IwazaruEndpoint0F75FF98",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "IwazaruEndpoint0F75FF98"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruEndpoint/Default/{proxy+}/Resource"
+      }
+    },
+    "IwazaruEndpointproxyANYEC4E3139": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "ANY",
+        "ResourceId": {
+          "Ref": "IwazaruEndpointproxy480C4637"
+        },
+        "RestApiId": {
+          "Ref": "IwazaruEndpoint0F75FF98"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "IwazaruFunction13083BBE",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruEndpoint/Default/{proxy+}/ANY/Resource"
+      }
+    },
+    "IwazaruEndpointANYEBF52260": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "ANY",
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "IwazaruEndpoint0F75FF98",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "IwazaruEndpoint0F75FF98"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "IwazaruFunction13083BBE",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "fly-my-pretties/IwazaruEndpoint/Default/ANY/Resource"
+      }
+    }
+  },
+  "Outputs": {
+    "MizaruEndpoint6AC9DABD": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "MizaruEndpoint5A0C7B64"
+            },
+            ".execute-api.ap-southeast-2.",
+            {
+              "Ref": "AWS::URLSuffix"
+            },
+            "/",
+            {
+              "Ref": "MizaruEndpointDeploymentStageprod223A93E0"
+            },
+            "/"
+          ]
+        ]
+      }
+    },
+    "KikazaruEndpointDA08FC9A": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "KikazaruEndpoint6EFB12FB"
+            },
+            ".execute-api.ap-southeast-2.",
+            {
+              "Ref": "AWS::URLSuffix"
+            },
+            "/",
+            {
+              "Ref": "KikazaruEndpointDeploymentStageprod5B9285CC"
+            },
+            "/"
+          ]
+        ]
+      }
+    },
+    "IwazaruEndpoint600CE4CA": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "IwazaruEndpoint0F75FF98"
+            },
+            ".execute-api.ap-southeast-2.",
+            {
+              "Ref": "AWS::URLSuffix"
+            },
+            "/",
+            {
+              "Ref": "IwazaruEndpointDeploymentStageprod2B812659"
+            },
+            "/"
+          ]
+        ]
+      }
+    }
+  }
+}
