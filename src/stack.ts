@@ -40,12 +40,12 @@ const personalAccount: cdk.Environment = {
 }
 
 export const createApp = async (env = personalAccount) => {
-  const [Mizaru, Kikazaru, Iwazaru] = await Promise.all([
-    compile("./functions/mizaru.ts"),
-    compile("./functions/kikazaru.ts"),
-    compile("./functions/iwazaru.ts"),
-  ])
+  const code = {
+    Mizaru: await compile("./functions/mizaru.ts"),
+    Kikazaru: await compile("./functions/kikazaru.ts"),
+    Iwazaru: await compile("./functions/iwazaru.ts"),
+  }
   const app = new cdk.App()
-  new Stack(app, STACK_NAME, { env, code: { Mizaru, Kikazaru, Iwazaru } })
+  new Stack(app, STACK_NAME, { env, code })
   return app
 }
