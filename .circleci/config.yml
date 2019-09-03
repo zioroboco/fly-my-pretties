@@ -50,14 +50,6 @@ jobs:
           name: Lint
           command: yarn lint
 
-  test:
-    <<: *defaults
-    steps:
-      - attach
-      - run:
-          name: Test
-          command: yarn test
-
   deploy:
     <<: *defaults
     steps:
@@ -76,12 +68,8 @@ workflows:
       - lint:
           requires:
             - install
-      - test:
-          requires:
-            - install
       - deploy:
           requires:
             - install
             - type
             - lint
-            - test
