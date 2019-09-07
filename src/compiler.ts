@@ -35,7 +35,7 @@ export function compile(entry: string): Promise<string> {
     const compiler = webpack({ ...config, entry })
     compiler.outputFileSystem = new MemoryFS()
     compiler.run((err, stats) => {
-      if (err || stats.hasErrors()) {
+      if (err || stats.hasErrors() || stats.hasWarnings()) {
         reject(stats.toString())
       }
       resolve(stats.compilation.assets[OUTFILE].source())
