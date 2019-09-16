@@ -5,7 +5,7 @@ import { compile } from "./compiler"
 
 export const STACK_NAME = "fly-my-pretties"
 
-export class Function extends lambda.Function {
+export class InlineFunction extends lambda.Function {
   constructor(scope: cdk.Construct, id: string, props: { code: string }) {
     super(scope, id, {
       handler: "index.handler",
@@ -15,22 +15,18 @@ export class Function extends lambda.Function {
   }
 }
 
-export type StackProps = cdk.StackProps & {
-  code: { Mizaru: string; Kikazaru: string; Iwazaru: string }
-}
+export type Functions = { id: string; code: string }[]
+export type StackProps = cdk.StackProps & { functions: Functions }
 
 export class Stack extends cdk.Stack {
-  constructor(app: cdk.App, id: string, { code, ...props }: StackProps) {
+  constructor(app: cdk.App, id: string, { functions, ...props }: StackProps) {
     super(app, id, props)
-    new apiGateway.LambdaRestApi(this, "MizaruEndpoint", {
-      handler: new Function(this, "MizaruFunction", { code: code.Mizaru }),
-    })
-    new apiGateway.LambdaRestApi(this, "KikazaruEndpoint", {
-      handler: new Function(this, "KikazaruFunction", { code: code.Kikazaru }),
-    })
-    new apiGateway.LambdaRestApi(this, "IwazaruEndpoint", {
-      handler: new Function(this, "IwazaruFunction", { code: code.Iwazaru }),
-    })
+    functions.forEach(
+      ({ id, code }) =>
+        new apiGateway.LambdaRestApi(this, `${id}Endpoint`, {
+          handler: new InlineFunction(this, `${id}Function`, { code }),
+        })
+    )
   }
 }
 
@@ -40,12 +36,12 @@ const personalAccount: cdk.Environment = {
 }
 
 export const createApp = async (env = personalAccount) => {
-  const code = {
-    Mizaru: await compile("./functions/mizaru.ts"),
-    Kikazaru: await compile("./functions/kikazaru.ts"),
-    Iwazaru: await compile("./functions/iwazaru.ts"),
-  }
+  const functions: Functions = [
+    { id: "Mizaru", code: await compile("./functions/mizaru.ts") },
+    { id: "Kikazaru", code: await compile("./functions/kikazaru.ts") },
+    { id: "Iwazaru", code: await compile("./functions/iwazaru.ts") },
+  ]
   const app = new cdk.App()
-  new Stack(app, STACK_NAME, { env, code })
+  new Stack(app, STACK_NAME, { env, functions })
   return app
 }
